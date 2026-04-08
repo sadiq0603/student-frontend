@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLOMS - Student Learning Outcome Management System</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        success: '#22c55e',
+                        warning: '#eab308',
+                        error: '#ef4444',
+                        info: '#3b82f6',
+                        background: '#f9fafb',
+                        surface: '#ffffff',
+                        textMain: '#1f2937'
+                    },
+                    boxShadow: {
+                        'card': '0 10px 40px rgba(102, 126, 234, 0.15)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-background text-textMain min-h-screen flex flex-col font-sans">
+
+    <!-- Shell: Sidebar & Navbar (Hidden on Login/Landing) -->
+    <div id="app-shell" class="hidden flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="w-64 bg-surface shadow-card flex-shrink-0 flex flex-col transition-all duration-300 z-20">
+            <div class="h-16 flex items-center justify-center border-b border-gray-100">
+                <div class="flex items-center gap-2 text-primary">
+                    <i data-lucide="graduation-cap" class="w-8 h-8"></i>
+                    <h1 id="sidebar-title" class="text-xl font-display font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#667eea] to-[#764ba2]">SLOMS</h1>
+                </div>
+            </div>
+            <nav id="sidebar-nav" class="flex-1 py-4 px-3 space-y-1 overflow-y-auto">
+                <!-- Navigation links injected dynamically -->
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col relative overflow-hidden">
+            <!-- Navbar -->
+            <header class="h-16 bg-surface shadow-sm z-10 flex items-center justify-between px-6">
+                <div class="flex items-center gap-4">
+                    <button id="mobile-menu-btn" class="lg:hidden text-gray-500 hover:text-gray-700">
+                        <i data-lucide="menu"></i>
+                    </button>
+                    <h2 id="page-title" class="text-lg font-display font-semibold text-gray-800">Dashboard</h2>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="text-right">
+                            <p id="user-name" class="text-sm font-semibold">User Name</p>
+                            <p id="user-role" class="text-xs text-gray-500 capitalize">Role</p>
+                        </div>
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-[#667eea] to-[#764ba2] flex items-center justify-center text-white font-bold" id="user-avatar">
+                            U
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dynamic View Container -->
+            <main id="main-content" class="flex-1 overflow-y-auto p-6 bg-background">
+                <!-- Content injected here -->
+            </main>
+        </div>
+    </div>
+
+    <!-- Full Page Container (For Landing & Login) -->
+    <div id="full-page" class="min-h-screen flex flex-col">
+        <!-- Injected here -->
+    </div>
+
+    <!-- Global Containers -->
+    <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
+    <div id="modal-container" class="fixed inset-0 z-50 hidden items-center justify-center bg-gray-900/50 backdrop-blur-sm"></div>
+
+    <!-- Scripts -->
+    <script src="/js/api.js"></script>
+    <script src="/js/components.js"></script>
+    <script src="/js/views/admin.js"></script>
+    <script src="/js/views/student.js"></script>
+    <script src="/js/app.js"></script>
+
+    <!-- Element SDK Shim -->
+    <script>
+        window.addEventListener('message', (event) => {
+            const data = event.data;
+            if (data && data.type === 'UPDATE_SETTINGS') {
+                if (data.title) {
+                    const titles = document.querySelectorAll('#sidebar-title');
+                    titles.forEach(t => t.textContent = data.title);
+                }
+                if (data.tagline) {
+                    const taglines = document.querySelectorAll('.tagline');
+                    taglines.forEach(t => t.textContent = data.tagline);
+                }
+                if (data.colors) {
+                    const root = document.documentElement;
+                    if (data.colors.primary1) root.style.setProperty('--color-primary-start', data.colors.primary1);
+                    if (data.colors.primary2) root.style.setProperty('--color-primary-end', data.colors.primary2);
+                    if (data.colors.success) root.style.setProperty('--success-color', data.colors.success);
+                    if (data.colors.warning) root.style.setProperty('--warning-color', data.colors.warning);
+                    if (data.colors.error) root.style.setProperty('--error-color', data.colors.error);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

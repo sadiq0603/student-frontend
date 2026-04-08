@@ -1,0 +1,83 @@
+:root {
+  /* Dynamic Customization Variables (Can be updated via JS for recoloring) */
+  --color-primary-start: #667eea;
+  --color-primary-end: #764ba2;
+  
+  --system-title: 'SLOMS';
+  --system-tagline: 'Student Learning Outcome Management System';
+}
+
+/* Custom Scrollbar for a cleaner look */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Utilities */
+.gradient-text {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(135deg, var(--color-primary-start), var(--color-primary-end));
+}
+
+.gradient-bg {
+  background-image: linear-gradient(135deg, var(--color-primary-start), var(--color-primary-end));
+}
+
+.hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px rgba(102, 126, 234, 0.25);
+}
+
+/* Toast Animations */
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; transform: translateY(-10px); }
+}
+
+.toast {
+  animation: slideInRight 0.3s ease forwards;
+}
+.toast.hiding {
+  animation: fadeOut 0.3s ease forwards;
+}
+
+/* Modal Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes scaleUp {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+#modal-container:not(.hidden) {
+  animation: fadeIn 0.2s ease forwards;
+}
+#modal-container > div {
+  animation: scaleUp 0.2s ease forwards;
+}
+
+/* Progress bar animation */
+.progress-fill {
+  transition: width 1s ease-in-out;
+}
